@@ -1,0 +1,62 @@
+/* Контейнер авторизации */
+.auth-container {
+    max-width: 320px;
+    margin: 10vh auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.auth-container h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Форма */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Поля ввода */
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+    padding: 12px;
+    margin: 8px 0;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.auth-form input[type="text"]:focus,
+.auth-form input[type="password"]:focus {
+    border-color: #007bff;
+}
+
+/* Кнопка авторизации */
+.auth-form button {
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Скрываем стандартные текстовые подсказки */
+.auth-form input[type="text"]::placeholder,
+.auth-form input[type="password"]::placeholder {
+    color: #aaa;
+}

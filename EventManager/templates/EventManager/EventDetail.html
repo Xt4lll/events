@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block header %}{% include 'inc/_header.html' %}{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ event.name }}</h5>
+            <p class="cart-text">{{ event.type }}</p>
+            <p class="cart-text">{{ event.place.place_name }}</p>
+            <p class="cart-text">{{ event.place.address }}</p>
+            <p class="cart-text">{{ event.sponsor }}</p>
+            <p class="cart-text">{{ event.event_date }}</p>
+        </div>
+    </div>
+{% endblock %}
