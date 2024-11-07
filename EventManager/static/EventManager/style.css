@@ -1,0 +1,209 @@
+/* Основные настройки */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1b1b1b;
+    color: #ddd;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Шапка */
+header {
+    background-color: #111;
+    padding: 20px 0;
+    border-bottom: 2px solid #333;
+    text-align: center;
+}
+
+header h1 {
+    color: #e6e6e6;
+    font-weight: 600;
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+header nav a {
+    color: #57e6ff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.1rem;
+}
+
+header nav a:hover {
+    color: #fff;
+}
+
+/* Карточки */
+.card {
+    background-color: #222;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #ddd;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #bdbdbd;
+    margin-bottom: 10px;
+}
+
+/* Кнопки */
+.btn-primary {
+    background-color: #57e6ff;
+    border: none;
+    color: #111;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #33b7ff;
+    transform: translateY(-3px);
+}
+
+/* Ссылки */
+a {
+    color: #57e6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #33b7ff;
+    text-decoration: underline;
+}
+
+/* Формы */
+form {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #333;
+    color: #ddd;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+form input[type="submit"] {
+    background-color: #57e6ff;
+    border: none;
+    color: #111;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #33b7ff;
+}
+
+/* Подсказки для форм */
+.helptext {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* Ошибки */
+.alert {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff5c5c;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 5px solid #ff5c5c;
+    margin-bottom: 20px;
+}
+
+/* Футер */
+footer {
+    background-color: #111;
+    padding: 20px 0;
+    border-top: 2px solid #333;
+    text-align: center;
+    color: #666;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+footer a {
+    color: #57e6ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-name {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.btn-logout, .btn-login {
+    background-color: #57e6ff;
+    border: none;
+    color: #111;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-logout:hover, .btn-login:hover {
+    background-color: #33b7ff;
+}

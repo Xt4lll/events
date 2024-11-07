@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% block header %}{% include 'inc/_header.html' %}{% endblock %}
 {% block content %}
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ event.name }}</h5>
-            <p class="cart-text">{{ event.type }}</p>
-            <p class="cart-text">{{ event.place.place_name }}</p>
-            <p class="cart-text">{{ event.place.address }}</p>
-            <p class="cart-text">{{ event.sponsor }}</p>
-            <p class="cart-text">{{ event.event_date }}</p>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ event.name }}</h5>
+                <p class="card-text"><strong>Тип:</strong> {{ event.type }}</p>
+                <p class="card-text"><strong>Место:</strong> {{ event.place.place_name }}</p>
+                <p class="card-text"><strong>Адрес:</strong> {{ event.place.address }}</p>
+                <p class="card-text"><strong>Спонсор:</strong> {{ event.sponsor }}</p>
+                <p class="card-text"><strong>Дата:</strong> {{ event.event_date }}</p>
+                <a href="#" class="btn btn-primary mt-3">Зарегистрироваться</a>
+            </div>
         </div>
     </div>
 {% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}

@@ -1,10 +1,18 @@
 <nav>
-    <header class="d-flex justify-content-center py-3">
+    <header class="d-flex justify-content-between py-3">
         <ul class="nav nav-pills">
             <li class="nav-item"><a class="nav-link">Концерты</a></li>
             <li class="nav-item"><a class="nav-link">Концерты</a></li>
             <li class="nav-item"><a class="nav-link">Концерты</a></li>
             <li class="nav-item"><a class="nav-link">Концерты</a></li>
         </ul>
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                <span class="user-name">Привет, {{ user.username }}!</span>
+                <a href="{% url 'logout' %}" class="btn btn-logout">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-login">Войти</a>
+            {% endif %}
+        </div>
     </header>
 </nav>

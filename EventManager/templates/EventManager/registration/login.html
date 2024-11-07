@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Авторизация</h2>
-    <form method="post">
-        {% csrf_token %}
-        <table>
-            {{ form.as_p }}
-            <tr>
-                <td>&nbsp;</td>
-                <td><input type="submit" value="Submit"></td>
-            </tr>
-        </table>
-    </form>
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="card p-4" style="width: 400px;">
+            <h2 class="text-center mb-4">Авторизация</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary w-100">Войти</button>
+                </div>
+                <a class="nav-link" href="{% url 'register' %}">Нет аккаунта? Зарегистрируйтесь</a>
+            </form>
+        </div>
+    </div>
 {% endblock %}

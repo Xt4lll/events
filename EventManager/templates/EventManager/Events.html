@@ -1,26 +1,21 @@
 {% extends 'base.html' %}
 {% block header %}{% include 'inc/_header.html' %}{% endblock %}
 {% block content %}
-     <div class="container mt-4">
 
-     {% if messages %}
-        {% for message in messages %}
-            <script>
-                alert("{{ message }}");
-            </script>
-        {% endfor %}
-    {% endif %}
-
-    {% for event in event_list %}
-        <div class="card" style="width: 18rem; margin-bottom: 5%;">
-            <div class="card-body">
-                <p class="card-title"><a href="{% url 'event_detail' event.id %}" class="">{{ event.name }}</a></p>
-                <p class="card-text">{{ event.type.name }}</p>
-                <p class="card-text">{{ event.place.place_name }}</p>
-                <a href="#" class="btn btn-primary">Купить</a>
-            </div>
+        <div class="row">
+            {% for event in event_list %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'event_detail' event.id %}" class="text-primary">{{ event.name }}</a></h5>
+                            <p class="card-text">{{ event.type.name }}</p>
+                            <p class="card-text">{{ event.place.place_name }}</p>
+                            <a href="#" class="btn btn-primary">Купить</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-     </div>
-
+    </div>
 {% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}
