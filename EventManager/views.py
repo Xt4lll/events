@@ -1,7 +1,10 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 import qrcode
 from django.http import HttpResponse
+from django.template.context_processors import request
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from io import BytesIO
 from django.contrib.auth import authenticate, login, logout
@@ -9,7 +12,8 @@ from django.contrib import messages
 
 from .models import *
 from .forms import *
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+
 
 # Create your views here.
 
@@ -37,8 +41,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 #     # Возвращаем изображение как HTTP-ответ
 #     return HttpResponse(buffer, content_type="image/png")
 
+class AdminOrManagerRequiredMixin(AccessMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.role not in ['admin', 'manager']:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
 def custom_permission_denied_view(request, exception=None):
-    return render(request, 'EventManager/exceptions/403.html', status=403)
+    return render(request, 'EventManager/exceptions/../templates/403.html', status=403)
 
 def register(request):
     if request.method == 'POST':
@@ -85,4 +95,10 @@ class EventList(LoginRequiredMixin, ListView):
 class EventDetail(LoginRequiredMixin, DetailView):
     model = Event
     template_name = 'EventManager/EventDetail.html'
+    context_object_name = 'event'
+
+class EventCreate(LoginRequiredMixin, AdminOrManagerRequiredMixin, CreateView):
+    model = Event
+    template_name = 'EventManager/EventAdd.html'
+    form_class = EventForm
     context_object_name = 'event'

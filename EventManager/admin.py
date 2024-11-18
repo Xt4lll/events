@@ -27,7 +27,7 @@ class EventTypeAdmin(admin.ModelAdmin):
 class EventAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'sponsor', 'place', 'type', 'event_date')
 
-@admin.register(EventArea)
+@admin.register(Tickets)
 class EventAreaAdmin(admin.ModelAdmin):
     list_display = ('id', 'event', 'area', 'places', 'price')
 

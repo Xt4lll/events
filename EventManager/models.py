@@ -56,7 +56,7 @@ class Event(models.Model):
         return self.name
 
 # Модель Event Areas
-class EventArea(models.Model):
+class Tickets(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     places = models.IntegerField()
@@ -65,7 +65,7 @@ class EventArea(models.Model):
 # Модель Cart
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    ticket = models.ForeignKey(EventArea, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(Tickets, on_delete=models.CASCADE)
 
 # Модель Order
 class Order(models.Model):
