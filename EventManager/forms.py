@@ -32,3 +32,19 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['name', 'sponsor', 'place', 'type', 'event_date']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название мероприятия'}),
+            'sponsor': forms.Select(attrs={'class': 'form-control'}),
+            'place': forms.Select(attrs={'class': 'form-control'}),
+            'type': forms.Select(attrs={'class': 'form-control'}),
+            'event_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+        }
+
+        labels = {
+            'name': 'Название мероприятия',
+            'sponsor': 'Спонсор',
+            'place': 'Место проведения',
+            'type': 'Тип мероприятия',
+            'event_date': 'Дата и время мероприятия',
+        }

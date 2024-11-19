@@ -8,6 +8,8 @@ urlpatterns = [
     path('events/', v.EventList.as_view(), name='event_list'),
     path('events/<int:pk>', v.EventDetail.as_view(), name='event_detail'),
     path('events/create/', v.EventCreate.as_view(), name='event_create'),
+    path('events/update/<int:pk>', v.EventUpdate.as_view(), name='event_update'),
+    path('events/<int:pk>/delete/', v.EventDelete.as_view(), name='event_delete'),
 
     path('register/', v.register, name='register'),
 

@@ -7,6 +7,15 @@ body {
     padding: 0;
 }
 
+button {
+    outline: none;
+}
+
+form {
+    border: none;
+    outline: none;
+}
+
 .container {
     padding: 20px;
     max-width: 1200px;
@@ -206,4 +215,18 @@ footer a:hover {
 
 .btn-logout:hover, .btn-login:hover {
     background-color: #33b7ff;
+}
+
+.btn-danger {
+    background-color: #57e6ff;
+    border: none;
+    color: #26ba28;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
 }

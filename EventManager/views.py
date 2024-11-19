@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 import qrcode
 from django.http import HttpResponse
 from django.template.context_processors import request
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from io import BytesIO
 from django.contrib.auth import authenticate, login, logout
@@ -61,7 +62,7 @@ def register(request):
             return redirect('event_list')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'EventManager/registration/login.html', {'form': form})
+    return render(request, 'EventManager/registration/login.html', {'form': form, 'title':'Регистрация'})
 
 
 def login_view(request):
@@ -78,11 +79,13 @@ def login_view(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, 'EventManager/registration/login.html', {'form': form})
+    return render(request, 'EventManager/registration/login.html', {'form': form, 'title':'Авторизация'})
 
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+# Event Views
 
 class EventList(LoginRequiredMixin, ListView):
     model = Event
@@ -99,6 +102,22 @@ class EventDetail(LoginRequiredMixin, DetailView):
 
 class EventCreate(LoginRequiredMixin, AdminOrManagerRequiredMixin, CreateView):
     model = Event
-    template_name = 'EventManager/EventAdd.html'
+    template_name = 'EventManager/EventEditCreate.html'
     form_class = EventForm
     context_object_name = 'event'
+
+    success_url = reverse_lazy('event_list')
+
+class EventUpdate(LoginRequiredMixin, AdminOrManagerRequiredMixin, UpdateView):
+    model = Event
+    template_name = 'EventManager/EventEditCreate.html'
+    form_class = EventForm
+    context_object_name = 'event'
+
+    success_url = reverse_lazy('event_list')
+
+class EventDelete(LoginRequiredMixin, AdminOrManagerRequiredMixin, DeleteView):
+    model = Event
+    # template_name = 'EventManager/EventDetail.html'
+    context_object_name = 'event'
+    success_url = reverse_lazy('event_list')

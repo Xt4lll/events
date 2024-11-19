@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block header %}{% include 'inc/_header.html' %}{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+            <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_name" class="form-label">Название мероприятия</label>
+                {{ form.name }}
+            </div>
+            <div class="mb-3">
+                <label for="id_sponsor" class="form-label">Спонсор</label>
+                {{ form.sponsor }}
+            </div>
+            <div class="mb-3">
+                <label for="id_place" class="form-label">Место проведения</label>
+                {{ form.place }}
+            </div>
+            <div class="mb-3">
+                <label for="id_type" class="form-label">Тип мероприятия</label>
+                {{ form.type }}
+            </div>
+            <div class="mb-3">
+                <label for="id_event_date" class="form-label">Дата и время мероприятия</label>
+                {{ form.event_date }}
+            </div>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </form>
+    </div>
+{% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}

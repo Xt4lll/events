@@ -10,7 +10,7 @@
                             <h5 class="card-title"><a href="{% url 'event_detail' event.id %}" class="text-primary">{{ event.name }}</a></h5>
                             <p class="card-text">{{ event.type.name }}</p>
                             <p class="card-text">{{ event.place.place_name }}</p>
-                            <a href="#" class="btn btn-primary">Купить</a>
+                            <a href="{% url 'event_detail' event.id %}" class="btn btn-primary">Купить</a>
                         </div>
                     </div>
                 </div>
