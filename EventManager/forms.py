@@ -31,7 +31,7 @@ class CustomAuthenticationForm(AuthenticationForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'sponsor', 'place', 'type', 'event_date']
+        fields = ['name', 'sponsor', 'place', 'type', 'event_date', 'artists']
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название мероприятия'}),
@@ -39,6 +39,7 @@ class EventForm(forms.ModelForm):
             'place': forms.Select(attrs={'class': 'form-control'}),
             'type': forms.Select(attrs={'class': 'form-control'}),
             'event_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'artists': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
         labels = {
@@ -47,4 +48,5 @@ class EventForm(forms.ModelForm):
             'place': 'Место проведения',
             'type': 'Тип мероприятия',
             'event_date': 'Дата и время мероприятия',
+            'artists': 'Выступающие артисты'
         }

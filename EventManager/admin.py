@@ -43,6 +43,6 @@ class OrderAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'description')
 
-@admin.register(ActingArtist)
-class ActingArtistAdmin(admin.ModelAdmin):
-    list_display = ('id', 'artist', 'event')
+# @admin.register(ActingArtist)
+# class ActingArtistAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'artist', 'event')

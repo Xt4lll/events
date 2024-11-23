@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
+# Пользовательская модель User
 class User(AbstractUser):
     ROLE_CHOICES = [
         ('user', 'User'),
@@ -44,6 +44,14 @@ class EventType(models.Model):
     def __str__(self):
         return self.name
 
+# Модель Artists
+class Artist(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 # Модель Events
 class Event(models.Model):
     name = models.CharField(max_length=255)
@@ -51,11 +59,12 @@ class Event(models.Model):
     place = models.ForeignKey(Address, on_delete=models.CASCADE)
     type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     event_date = models.DateTimeField()
+    artists = models.ManyToManyField(Artist, related_name='events')
 
     def __str__(self):
         return self.name
 
-# Модель Event Areas
+# Модель Tickets
 class Tickets(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
@@ -71,16 +80,3 @@ class Cart(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255)
-
-# Модель Artists
-class Artist(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-# Модель Acting Artists
-class ActingArtist(models.Model):
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)

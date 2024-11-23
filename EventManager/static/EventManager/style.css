@@ -235,3 +235,7 @@ footer a:hover {
     background-color: #801111;
     transform: translateY(-3px);
 }
+
+li::marker{
+    content: "- ";
+}

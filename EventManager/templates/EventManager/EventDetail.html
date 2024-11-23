@@ -6,6 +6,13 @@
             <div class="card-body">
                 <h5 class="card-title">{{ event.name }}</h5>
                 <p class="card-text"><strong>Тип:</strong> {{ event.type }}</p>
+                <p class="card-text"><strong>Выступающие артисты:</strong>
+                {% for a in event.artists.all %}
+                    <ul>
+                        <li>{{ a.name }}</li>
+                    </ul>
+                {% endfor %}
+                </p>
                 <p class="card-text"><strong>Место:</strong> {{ event.place.place_name }}</p>
                 <p class="card-text"><strong>Адрес:</strong> {{ event.place.address }}</p>
                 <p class="card-text"><strong>Спонсор:</strong> {{ event.sponsor }}</p>
