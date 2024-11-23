@@ -9,7 +9,7 @@
                 <p class="card-text"><strong>Выступающие артисты:</strong>
                 {% for a in event.artists.all %}
                     <ul>
-                        <li>{{ a.name }}</li>
+                        <li class="list-artist">{{ a.name }}</li>
                     </ul>
                 {% endfor %}
                 </p>

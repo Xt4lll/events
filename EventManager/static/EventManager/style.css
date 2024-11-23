@@ -236,6 +236,6 @@ footer a:hover {
     transform: translateY(-3px);
 }
 
-li::marker{
+.list-artist::marker{
     content: "- ";
 }
