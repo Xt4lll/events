@@ -1,7 +1,7 @@
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import qrcode
 from django.http import HttpResponse
 from django.template.context_processors import request
@@ -85,6 +85,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+
 # Event Views
 
 class EventList(LoginRequiredMixin, ListView):
@@ -121,3 +122,29 @@ class EventDelete(LoginRequiredMixin, AdminOrManagerRequiredMixin, DeleteView):
     # template_name = 'EventManager/EventDetail.html'
     context_object_name = 'event'
     success_url = reverse_lazy('event_list')
+
+
+# Buy Ticket
+
+@login_required
+def buy_ticket(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    tickets = Tickets.objects.filter(event=event)
+
+    return render(request, 'EventManager/BuyTicket.html', {
+        'event': event,
+        'tickets': tickets,
+    })
+
+@login_required
+def add_to_cart(request, ticket_id):
+    ticket = get_object_or_404(Tickets, id=ticket_id)
+    event_id = ticket.event.id
+    if ticket.places > 0:
+        Cart.objects.create(user=request.user, ticket=ticket)
+        ticket.places -= 1
+        ticket.save()
+        messages.success(request, "Билет добавлен в корзину!")
+    else:
+        messages.error(request, "Билетов больше нет.")
+    return redirect('buy_ticket', event_id=ticket.event.id)

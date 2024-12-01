@@ -11,6 +11,10 @@ urlpatterns = [
     path('events/update/<int:pk>', v.EventUpdate.as_view(), name='event_update'),
     path('events/<int:pk>/delete/', v.EventDelete.as_view(), name='event_delete'),
 
+    path('events/<int:event_id>/buy/', v.buy_ticket, name='buy_ticket'),
+
+    path('cart/add/<int:ticket_id>/', v.add_to_cart, name='add_to_cart'),
+
     path('register/', v.register, name='register'),
 
     path('login/', v.login_view, name='login'),

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block header %}{% include 'inc/_header.html' %}{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Выберите билет для мероприятия: {{ event.name }}</h2>
+    <div class="row mt-4">
+        {% for ticket in tickets %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ticket.area.name }}</h5>
+                        <p class="card-text">
+                            <strong>Количество мест:</strong> {{ ticket.places }}<br>
+                            <strong>Цена:</strong> {{ ticket.price }} ₽
+                        </p>
+                        {% if ticket.places > 0 %}
+                            <form method="post" action="{% url 'add_to_cart' ticket.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+                            </form>
+                        {% else %}
+                            <span class="text-danger">Мест нет</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}

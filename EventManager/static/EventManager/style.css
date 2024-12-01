@@ -239,3 +239,16 @@ footer a:hover {
 .list-artist::marker{
     content: "- ";
 }
+
+
+.alert-success {
+    background-color: #d4edda; /* Зеленый фон */
+    color: #155724; /* Темно-зеленый текст */
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error, .alert-danger {
+    background-color: #f8d7da; /* Красный фон */
+    color: #721c24; /* Темно-красный текст */
+    border: 1px solid #f5c6cb;
+}
