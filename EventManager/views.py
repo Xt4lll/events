@@ -148,3 +148,109 @@ def add_to_cart(request, ticket_id):
     else:
         messages.error(request, "Билетов больше нет.")
     return redirect('buy_ticket', event_id=ticket.event.id)
+
+
+# Cart views
+
+@login_required
+def cart_view(request):
+    cart_items = Cart.objects.filter(user=request.user).select_related('ticket__event', 'ticket__area')
+    return render(request, 'EventManager/Cart.html', {'cart_items': cart_items})
+
+
+@login_required
+def remove_from_cart(request, cart_id):
+    cart_item = get_object_or_404(Cart, id=cart_id, user=request.user)
+    ticket = cart_item.ticket
+    cart_item.delete()
+
+    ticket.places += 1
+    ticket.save()
+
+    messages.success(request, "Билет удалён из корзины.")
+    return redirect('cart')
+
+
+# Payment views
+
+@login_required
+def payment_page(request):
+    return render(request, 'EventManager/Payment.html')
+
+
+@login_required
+def process_payment(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        card_number = request.POST.get('card_number')
+
+        # Получаем корзину пользователя
+        cart_items = Cart.objects.filter(user=request.user)
+        if not cart_items:
+            messages.error(request, "Ваша корзина пуста!")
+            return redirect('cart')
+
+        # Собираем информацию о мероприятиях
+        event_info = "\n".join([
+            f"{item.ticket.event.name} - {item.ticket.area.name}, Цена: {item.ticket.price} ₽"
+            for item in cart_items
+        ])
+
+        # Сохраняем данные в базу
+        payment = Payment.objects.create(
+            user=request.user,
+            first_name=first_name,
+            last_name=last_name,
+            card_number=card_number[-4:],  # Храним только последние 4 цифры
+            event_info=event_info
+        )
+
+        # Очищаем корзину пользователя
+        cart_items.delete()
+
+        messages.success(request, "Оплата успешно завершена!")
+        return redirect('payment_qr_codes', payment_id=payment.id)
+
+    return redirect('payment_page')
+
+
+@login_required
+def payment_qr_codes(request, payment_id):
+    payment = get_object_or_404(Payment, id=payment_id)
+
+    # Генерация QR-кода
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr_data = f"Имя: {payment.first_name} {payment.last_name}\n"
+    qr_data += f"Номер карты: **** **** **** {payment.card_number}\n"
+    qr_data += f"Мероприятия:\n{payment.event_info}"
+    qr.add_data(qr_data)
+    qr.make(fit=True)
+
+    # Создание изображения QR-кода
+    img = qr.make_image(fill_color="black", back_color="white")
+    buffer = BytesIO()
+    img.save(buffer)
+    buffer.seek(0)
+
+    # Возвращаем изображение на страницу
+    return HttpResponse(buffer, content_type="image/png")
+
+
+# History views
+
+@login_required
+def purchase_history(request):
+    payments = Payment.objects.filter(user=request.user).order_by('-purchase_date')
+    return render(request, 'EventManager/PurchaseHistory.html', {'payments': payments})
+
+@login_required
+@user_passes_test(lambda user: user.role in ['manager', 'admin'], login_url='/403/')
+def all_purchase_history(request):
+    payments = Payment.objects.all().order_by('-purchase_date')
+    return render(request, 'EventManager/AllPurchaseHistory.html', {'payments': payments})

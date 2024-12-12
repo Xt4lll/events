@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block header %}{% include 'inc/_header.html' %}{% endblock %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>Ваши QR-коды</h2>
+    <p>Сохраните этот QR-код для подтверждения вашей оплаты.</p>
+    <img src="{% url 'payment_qr_codes' payment_id=payment.id %}" alt="QR Code">
+</div>
+{% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}

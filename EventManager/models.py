@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.timezone import now
 
 # Пользовательская модель User
 class User(AbstractUser):
@@ -83,3 +84,15 @@ class Cart(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255)
+
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payments', null=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    card_number = models.CharField(max_length=16)
+    event_info = models.TextField()
+    purchase_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return f"Payment #{self.id} by {self.user.username}"

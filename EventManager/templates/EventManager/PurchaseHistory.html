@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block header %}{% include 'inc/_header.html' %}{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>История покупок</h2>
+    <div class="row mt-4">
+        {% for payment in payments %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Покупка #{{ payment.id }}</h5>
+                        <p class="card-text">
+                            <strong>Мероприятия:</strong><br>
+                            {{ payment.event_info|linebreaksbr }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Дата покупки:</strong> {{ payment.purchase_date|date:"d.m.Y H:i" }}
+                        </p>
+                        <a href="{% url 'payment_qr_codes' payment_id=payment.id %}" class="btn btn-primary">
+                            Посмотреть QR-код
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}

@@ -15,6 +15,17 @@ urlpatterns = [
 
     path('cart/add/<int:ticket_id>/', v.add_to_cart, name='add_to_cart'),
 
+    path('cart/', v.cart_view, name='cart'),
+    path('cart/remove/<int:cart_id>/', v.remove_from_cart, name='remove_from_cart'),
+
+    path('cart/payment/', v.payment_page, name='payment_page'),
+    path('cart/payment/process/', v.process_payment, name='process_payment'),
+    path('cart/payment/qr/<int:payment_id>/', v.payment_qr_codes, name='payment_qr_codes'),
+
+    path('history/', v.purchase_history, name='purchase_history'),
+    path('history/all/', v.all_purchase_history, name='all_purchase_history'),
+
+
     path('register/', v.register, name='register'),
 
     path('login/', v.login_view, name='login'),

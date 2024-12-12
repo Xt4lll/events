@@ -1,10 +1,17 @@
 <nav>
     <header class="d-flex justify-content-between py-3">
         <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link">Концерты</a></li>
-            <li class="nav-item"><a class="nav-link">Концерты</a></li>
-            <li class="nav-item"><a class="nav-link">Концерты</a></li>
-            <li class="nav-item"><a class="nav-link">Концерты</a></li>
+            <li class="nav-item"><a href="{% url 'event_list' %}" class="nav-link">Концерты</a></li>
+            <li class="nav-item"><a href="{% url 'cart' %}" class="nav-link">Корзина</a></li>
+            <li class="nav-item"><a href="{% url 'purchase_history' %}" class="nav-link">История покупок</a></li>
+           {% if user.is_authenticated %}
+                {% if user.role == 'manager' or user.role == 'admin' %}
+                    <li class="nav-item">
+                        <a href="{% url 'all_purchase_history' %}" class="nav-link">Общая история покупок</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+
         </ul>
         <div class="user-info">
             {% if user.is_authenticated %}

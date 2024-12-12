@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block header %}{% include 'inc/_header.html' %}{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Оплата</h2>
+    <form method="post" action="{% url 'process_payment' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="first_name" class="form-label">Имя</label>
+            <input type="text" name="first_name" id="first_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Фамилия</label>
+            <input type="text" name="last_name" id="last_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="card_number" class="form-label">Номер карты</label>
+            <input type="text" name="card_number" id="card_number" class="form-control" maxlength="16" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Оплатить</button>
+    </form>
+</div>
+{% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}
