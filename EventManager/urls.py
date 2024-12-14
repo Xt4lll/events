@@ -25,6 +25,8 @@ urlpatterns = [
     path('history/', v.purchase_history, name='purchase_history'),
     path('history/all/', v.all_purchase_history, name='all_purchase_history'),
 
+    path('purchase_graph/', v.generate_purchase_graph, name='purchase_graph'),
+
 
     path('register/', v.register, name='register'),
 

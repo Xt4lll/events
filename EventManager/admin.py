@@ -43,6 +43,10 @@ class OrderAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'description')
 
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'first_name', 'last_name', 'card_number', 'event_info', 'purchase_date')
+
 # @admin.register(ActingArtist)
 # class ActingArtistAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'artist', 'event')

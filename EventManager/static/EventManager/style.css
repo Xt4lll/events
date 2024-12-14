@@ -252,3 +252,40 @@ footer a:hover {
     color: #721c24; /* Темно-красный текст */
     border: 1px solid #f5c6cb;
 }
+
+/* Основная кнопка */
+.dropdown-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Выпадающее содержимое */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+/* Стили для ссылок внутри выпадающего списка */
+.dropdown-content a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Отображение списка при наведении */
+.dropdown:hover .dropdown-content {
+    display: block;
+}

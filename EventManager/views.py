@@ -14,33 +14,13 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+from django.db.models import Q
 
+import matplotlib.pyplot as plt
+from io import BytesIO
+from django.db.models import Count
+from datetime import datetime
 
-# Create your views here.
-
-# def generate_qr_code(request, data):
-#     # Создание объекта QR-кода
-#     qr = qrcode.QRCode(
-#         version=1,  # Размер QR-кода
-#         error_correction=qrcode.constants.ERROR_CORRECT_L,
-#         box_size=10,  # Размер каждого квадрата
-#         border=4,  # Толщина границы
-#     )
-#
-#     # Добавление данных (например, строки)
-#     qr.add_data(data)
-#     qr.make(fit=True)
-#
-#     # Создание изображения QR-кода
-#     img = qr.make_image(fill='black', back_color='white')
-#
-#     # Сохранение изображения в поток байтов
-#     buffer = BytesIO()
-#     img.save(buffer)
-#     buffer.seek(0)
-#
-#     # Возвращаем изображение как HTTP-ответ
-#     return HttpResponse(buffer, content_type="image/png")
 
 class AdminOrManagerRequiredMixin(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
@@ -252,5 +232,56 @@ def purchase_history(request):
 @login_required
 @user_passes_test(lambda user: user.role in ['manager', 'admin'], login_url='/403/')
 def all_purchase_history(request):
-    payments = Payment.objects.all().order_by('-purchase_date')
-    return render(request, 'EventManager/AllPurchaseHistory.html', {'payments': payments})
+    order_by = request.GET.get('order_by', 'id')
+    if order_by == 'date':
+        order_by = 'purchase_date'
+    direction = request.GET.get('direction', 'asc')
+    search_query = request.GET.get('search', '')
+
+    if direction == 'desc':
+        order_by = f'-{order_by}'
+
+    payments = Payment.objects.filter(
+        Q(user__username__icontains=search_query) | Q(user__first_name__icontains=search_query)
+    ).order_by(order_by)
+
+    context = {
+        'payments': payments,
+        'current_order': order_by.lstrip('-'),
+        'current_direction': direction,
+        'search_query': search_query,
+    }
+    return render(request, 'EventManager/AllPurchaseHistory.html', context)
+
+def generate_purchase_graph(request):
+    # Получаем все покупки
+    payments = Payment.objects.all()
+
+    # Группируем по датам
+    purchase_dates = {}
+    for payment in payments:
+        date = payment.purchase_date.date()  # Дата без времени
+        if date not in purchase_dates:
+            purchase_dates[date] = 1
+        else:
+            purchase_dates[date] += 1
+
+    # Сортируем по дате
+    sorted_dates = sorted(purchase_dates.keys())
+    purchase_counts = [purchase_dates[date] for date in sorted_dates]
+
+    # Создание графика
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(sorted_dates, purchase_counts, marker='o', linestyle='-', color='b')
+
+    ax.set(xlabel='Дата', ylabel='Количество покупок',
+           title='Количество покупок по дням')
+    ax.grid(True)
+
+    # Сохранение графика в буфер
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+
+    # Отправляем график как изображение
+    return HttpResponse(buffer, content_type='image/png')
