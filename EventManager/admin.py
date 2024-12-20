@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import (User, Area, Sponsor, Address, EventType, Event, Tickets
-, Cart, Order, Artist, Payment)
+from .models import (User, Area, Sponsor, Address, EventType, Event, Tickets,
+                     Cart, Order, Artist, Payment)
 
 
 # Register your models here.
@@ -57,8 +57,8 @@ class ArtistAdmin(admin.ModelAdmin):
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'first_name', 'last_name', 'card_number'
-                    , 'event_info', 'purchase_date')
+    list_display = ('id', 'user', 'first_name', 'last_name', 'card_number',
+                    'event_info', 'purchase_date')
 
 
 # @admin.register(ActingArtist)
