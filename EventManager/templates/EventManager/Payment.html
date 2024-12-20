@@ -15,8 +15,9 @@
         </div>
         <div class="mb-3">
             <label for="card_number" class="form-label">Номер карты</label>
-            <input type="number" name="card_number" id="card_number" class="form-control" maxlength="16" minlength="16"
-                   required>
+            <input type="text" name="card_number" id="card_number" class="form-control"
+                required pattern="^\d{16}$" maxlength="16" minlength="16"
+                title="Введите ровно 16 цифр">
         </div>
         <button type="submit" class="btn btn-primary">Оплатить</button>
     </form>

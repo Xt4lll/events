@@ -14,7 +14,7 @@ from django.contrib import messages
 from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
-from django.db.models import Q
+from django.db.models import Q, F
 
 import matplotlib.pyplot as plt
 from io import BytesIO
@@ -116,17 +116,19 @@ def buy_ticket(request, event_id):
         'tickets': tickets,
     })
 
+
 @login_required
 def add_to_cart(request, ticket_id):
     ticket = get_object_or_404(Tickets, id=ticket_id)
-    event_id = ticket.event.id
-    if ticket.places > 0:
+
+    updated = Tickets.objects.filter(id=ticket_id, places__gt=0).update(places=F('places') - 1)
+
+    if updated:
         Cart.objects.create(user=request.user, ticket=ticket)
-        ticket.places -= 1
-        ticket.save()
         messages.success(request, "Билет добавлен в корзину!")
     else:
         messages.error(request, "Билетов больше нет.")
+
     return redirect('buy_ticket', event_id=ticket.event.id)
 
 
@@ -134,9 +136,13 @@ def add_to_cart(request, ticket_id):
 
 @login_required
 def cart_view(request):
-    cart_items = Cart.objects.filter(user=request.user).select_related('ticket__event', 'ticket__area')
-    return render(request, 'EventManager/Cart.html', {'cart_items': cart_items})
-
+    user_cart_items = (
+        Cart.objects
+        .filter(user=request.user)
+        .select_related('ticket__event', 'ticket__area')
+    )
+    context = {'cart_items': user_cart_items}
+    return render(request, 'EventManager/Cart.html', context)
 
 @login_required
 def remove_from_cart(request, cart_id):
@@ -285,3 +291,17 @@ def generate_purchase_graph(request):
 
     # Отправляем график как изображение
     return HttpResponse(buffer, content_type='image/png')
+
+
+@login_required
+def add_ticket(request):
+    if request.method == 'POST':
+        form = AddTicketForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Билет успешно добавлен.")
+            return redirect('event_list')  # Замените на нужный URL
+    else:
+        form = AddTicketForm()
+
+    return render(request, 'EventManager/AddTicket.html', {'form': form, 'title': 'Добавить билет'})

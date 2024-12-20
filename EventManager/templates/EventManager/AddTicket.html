@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block header %}{% include 'inc/_header.html' %}{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Добавить билет</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_event" class="form-label">Мероприятие</label>
+                {{ form.event }}
+            </div>
+            <div class="mb-3">
+                <label for="id_area" class="form-label">Зона</label>
+                {{ form.area }}
+            </div>
+            <div class="mb-3">
+                <label for="id_places" class="form-label">Количество мест</label>
+                {{ form.places }}
+            </div>
+            <div class="mb-3">
+                <label for="id_price" class="form-label">Цена</label>
+                {{ form.price }}
+            </div>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </form>
+    </div>
+{% endblock %}
+{% block footer %}{% include 'inc/_footer.html' %}{% endblock %}

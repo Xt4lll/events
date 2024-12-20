@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Event
+from .models import User, Event, Tickets
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -49,4 +49,21 @@ class EventForm(forms.ModelForm):
             'type': 'Тип мероприятия',
             'event_date': 'Дата и время мероприятия',
             'artists': 'Выступающие артисты'
+        }
+
+class AddTicketForm(forms.ModelForm):
+    class Meta:
+        model = Tickets
+        fields = ['event', 'area', 'places', 'price']
+        widgets = {
+            'event': forms.Select(attrs={'class': 'form-control'}),
+            'area': forms.Select(attrs={'class': 'form-control'}),
+            'places': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Количество мест', 'min': 0}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Цена', 'min': 0}),
+        }
+        labels = {
+            'event': 'Мероприятие',
+            'area': 'Зона',
+            'places': 'Количество мест',
+            'price': 'Цена',
         }

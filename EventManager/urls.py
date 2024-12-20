@@ -13,6 +13,9 @@ urlpatterns = [
 
     path('events/<int:event_id>/buy/', v.buy_ticket, name='buy_ticket'),
 
+    path('add-ticket/', v.add_ticket, name='add_ticket'),
+
+
     path('cart/add/<int:ticket_id>/', v.add_to_cart, name='add_to_cart'),
 
     path('cart/', v.cart_view, name='cart'),

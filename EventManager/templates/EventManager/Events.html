@@ -3,6 +3,14 @@
 {% block content %}
 
         <div class="row">
+        {% if user.is_authenticated %}
+                {% if user.role == 'manager' or user.role == 'admin' %}
+                    <a href="{% url 'event_create' %}" class="btn btn-primary" style="margin: 30px">Добавить
+                        концерт</a>
+                    <a href="{% url 'add_ticket' %}" class="btn btn-primary" style="margin: 30px">Добавить
+                        билет</a>
+                {% endif %}
+        {% endif %}
             {% for event in event_list %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
